@@ -10,7 +10,7 @@ console = Console()
 
 
 @app.command()
-def add_investor(name, contact, portfolio_value):
+def add(name, contact, portfolio_value):
     investor_repository = InvestorRepository(session)
     investor_service = InvestorService(investor_repository)
     investor = investor_service.create_investor(name, contact, portfolio_value)

@@ -1,14 +1,14 @@
 import typer
 from rich.console import Console
 
-from property_tracker.commands import add_investor
+from property_tracker.commands import investor
 
 # Set up application
 app = typer.Typer()
 console = Console()
 
 
-app.add_typer(add_investor.app, name="add-investor")
+app.add_typer(investor.app, name="investor")
 
 
 @app.callback()

@@ -5,6 +5,9 @@ description = "Tracking your real estate investments"
 authors = ["Kaan Karakeben <karakebenkaan@gmail.com>"]
 readme = "README.md"
 
+[tool.poetry.scripts]
+property_tracker = "main:app"
+
 [tool.poetry.dependencies]
 python = "^3.9"
 rich = "^13.7.1"
