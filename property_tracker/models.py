@@ -6,7 +6,7 @@ from sqlalchemy import Column, Date, Float, ForeignKey, Integer, String, create_
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship, sessionmaker
 
-DATABASE_URL = "postgresql://investment_user:password@localhost/property_investment"
+DATABASE_URL = "postgresql://postgres:password@localhost/property_investment"
 
 engine = create_engine(DATABASE_URL)
 Base = declarative_base()

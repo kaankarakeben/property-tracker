@@ -11,6 +11,14 @@ console = Console()
 
 @app.command()
 def add(name, contact, portfolio_value):
+    """
+    Add a new investor
+
+    Args:
+        name (str): Name of the investor
+        contact (str): Contact information of the investor
+        portfolio_value (float): Value of the investor's portfolio
+    """
     investor_repository = InvestorRepository(session)
     investor_service = InvestorService(investor_repository)
     investor = investor_service.create_investor(name, contact, portfolio_value)
