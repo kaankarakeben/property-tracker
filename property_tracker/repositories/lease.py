@@ -1,6 +1,6 @@
 from sqlalchemy.orm import Session
 
-from property_tracker.models import Lease
+from property_tracker.models.lease import Lease
 
 
 class LeaseRepository:

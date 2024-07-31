@@ -1,4 +1,4 @@
-from property_tracker.models import Investor
+from property_tracker.models.investor import Investor
 from property_tracker.repositories import InvestorRepository
 
 
@@ -10,17 +10,19 @@ class InvestorService:
     def __init__(self, investor_repository: InvestorRepository):
         self.investor_repository = investor_repository
 
-    def create_investor(self, name: str, contact_details: str, portfolio_value: float):
+    def create_investor(self, name: str, email: str, phone_number: str, address: str):
         """
         Create a new investor
+
         :param name: str
-        :param contact_details: str
-        :param portfolio_value: float
+        :param email: str
+        :param phone_number: str
+        :param address: str
         :return: Investor
         """
 
         new_investor = Investor(
-            name=name, contact_details=contact_details, portfolio_value=portfolio_value
+            name=name, email=email, phone_number=phone_number, address=address
         )
         return self.investor_repository.add_investor(new_investor)
 

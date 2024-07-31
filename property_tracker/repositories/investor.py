@@ -1,6 +1,6 @@
 from sqlalchemy.orm import Session
 
-from property_tracker.models import Investor
+from property_tracker.models.investor import Investor
 
 
 class InvestorRepository:
@@ -27,8 +27,7 @@ class InvestorRepository:
         self.db.refresh(investor)
         return investor
 
-    def delete_investor(self, investor_id: int):
-        investor = self.get_investor(investor_id)
+    def delete_investor(self, investor: Investor):
         self.db.delete(investor)
         self.db.commit()
         return investor

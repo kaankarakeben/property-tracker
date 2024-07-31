@@ -1,4 +1,4 @@
-from property_tracker.models import MaintenanceRequest
+from property_tracker.models.maintenance_request import MaintenanceRequest
 from property_tracker.repositories import MaintenanceRequestRepository
 
 

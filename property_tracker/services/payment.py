@@ -1,4 +1,4 @@
-from property_tracker.models import Payment
+from property_tracker.models.payment import Payment
 from property_tracker.repositories import PaymentRepository
 
 

@@ -1,4 +1,4 @@
-from property_tracker.models import Expense
+from property_tracker.models.expense import Expense
 from property_tracker.repositories import ExpenseRepository
 
 

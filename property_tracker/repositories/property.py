@@ -1,6 +1,6 @@
 from sqlalchemy.orm import Session
 
-from property_tracker.models import Property
+from property_tracker.models.property import Property
 
 
 class PropertyRepository:

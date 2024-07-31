@@ -1,6 +1,6 @@
 from sqlalchemy.orm import Session
 
-from property_tracker.models import MaintenanceRequest
+from property_tracker.models.maintenance_request import MaintenanceRequest
 
 
 class MaintenanceRequestRepository:

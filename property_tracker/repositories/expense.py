@@ -1,6 +1,6 @@
 from sqlalchemy.orm import Session
 
-from property_tracker.models import Expense
+from property_tracker.models.expense import Expense
 
 
 class ExpenseRepository:

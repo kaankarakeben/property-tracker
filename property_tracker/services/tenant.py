@@ -1,4 +1,4 @@
-from property_tracker.models import Tenant
+from property_tracker.models.tenant import Tenant
 from property_tracker.repositories import TenantRepository
 
 

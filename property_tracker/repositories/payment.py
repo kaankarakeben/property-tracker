@@ -1,6 +1,6 @@
 from sqlalchemy.orm import Session
 
-from property_tracker.models import Payment
+from property_tracker.models.payment import Payment
 
 
 class PaymentRepository:

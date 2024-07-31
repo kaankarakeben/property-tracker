@@ -1,4 +1,4 @@
-from property_tracker.models import Property
+from property_tracker.models.property import Property
 from property_tracker.repositories import PropertyRepository
 
 

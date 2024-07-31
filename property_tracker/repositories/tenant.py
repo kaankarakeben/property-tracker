@@ -1,6 +1,6 @@
 from sqlalchemy.orm import Session
 
-from property_tracker.models import Tenant
+from property_tracker.models.tenant import Tenant
 
 
 class TenantRepository:

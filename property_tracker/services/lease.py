@@ -1,4 +1,4 @@
-from property_tracker.models import Lease
+from property_tracker.models.lease import Lease
 from property_tracker.repositories import LeaseRepository
 
 
