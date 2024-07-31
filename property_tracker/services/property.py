@@ -1,4 +1,9 @@
-from property_tracker.models.property import Property
+from property_tracker.models.property import (
+    Property,
+    PropertyType,
+    PurchaseCurrency,
+    Status,
+)
 from property_tracker.repositories import PropertyRepository
 
 
@@ -14,28 +19,33 @@ class PropertyService:
         self,
         investor_id: int,
         address: str,
+        purchase_date: str,
         purchase_price: float,
-        current_value: float,
-        rent: float,
+        purchase_currency: PurchaseCurrency,
+        property_type: PropertyType,
+        status: Status,
     ):
         """
-        Create a new property
+        Create a property
         :param investor_id: int
         :param address: str
+        :param purchase_date: str
         :param purchase_price: float
-        :param current_value: float
-        :param rent: float
+        :param purchase_currency: Enum (PurchaseCurrency)
+        :param property_type: Enum (PropertyType)
+        :param status: str
         :return: Property
         """
-
-        new_property = Property(
-            investor_id=investor_id,
+        inv_property = Property(
+            owner_id=investor_id,
             address=address,
+            purchase_date=purchase_date,
             purchase_price=purchase_price,
-            current_value=current_value,
-            rent=rent,
+            purchase_currency=purchase_currency,
+            type=property_type,
+            status=status,
         )
-        return self.property_repository.add_property(new_property)
+        return self.property_repository.add_property(inv_property)
 
     def get_property(self, property_id: int):
         """
@@ -58,33 +68,32 @@ class PropertyService:
         self,
         property_id: int,
         address: str,
+        purchase_date: str,
         purchase_price: float,
-        current_value: float,
-        rent: float,
+        purchase_currency: PurchaseCurrency,
+        property_type: PropertyType,
+        status: Status,
     ):
         """
         Update a property
         :param property_id: int
         :param address: str
+        :param purchase_date: str
         :param purchase_price: float
-        :param current_value: float
-        :param rent: float
+        :param purchase_currency: Enum (PurchaseCurrency)
+        :param property_type: Enum (PropertyType)
+        :param status: str
         :return: Property
         """
 
-        property = self.get_property(property_id)
-        property.address = address
-        property.purchase_price = purchase_price
-        property.current_value = current_value
-        property.rent = rent
-        return self.property_repository.update_property(property)
+        inv_property = Property(
+            id=property_id,
+            address=address,
+            purchase_date=purchase_date,
+            purchase_price=purchase_price,
+            purchase_currency=purchase_currency,
+            type=property_type,
+            status=status,
+        )
 
-    def delete_property(self, property_id: int):
-        """
-        Delete a property
-        :param property_id: int
-        :return: None
-        """
-
-        property = self.get_property(property_id)
-        self.property_repository.delete_property(property)
+        return self.property_repository.update_property(inv_property)

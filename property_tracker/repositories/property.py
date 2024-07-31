@@ -11,7 +11,6 @@ class PropertyRepository:
         self.db.add(property)
         self.db.commit()
         self.db.refresh(property)
-        return property
 
     def get_property(self, property_id: int):
         return self.db.query(Property).filter(Property.id == property_id).first()
@@ -20,14 +19,12 @@ class PropertyRepository:
         return self.db.query(Property).all()
 
     def update_property(self, property_id: int, address: str):
-        property = self.get_property(property_id)
-        property.address = address
+        inv_property = self.get_property(property_id)
+        inv_property.address = address
         self.db.commit()
         self.db.refresh(property)
-        return property
 
     def delete_property(self, property_id: int):
-        property = self.get_property(property_id)
-        self.db.delete(property)
+        inv_property = self.get_property(property_id)
+        self.db.delete(inv_property)
         self.db.commit()
-        return property

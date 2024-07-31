@@ -17,6 +17,12 @@ class PropertyType(PyEnum):
     COMMERCIAL = "Commercial"
 
 
+class Status(PyEnum):
+    RENTED = "Rented"
+    VACANT = "Vacant"
+    UNDER_REPAIR = "Under Repair"
+
+
 class Property(Base):
     """
     Represents a property that an investor owns and rents out.
@@ -29,6 +35,6 @@ class Property(Base):
     purchase_price = Column(Float)
     purchase_currency = Column(Enum(PurchaseCurrency))
     type = Column(Enum(PropertyType))
-    status = Column(String)
+    status = Column(Enum(Status))
     owner_id = Column(Integer, ForeignKey("investors.id"))
     owner = relationship("Investor", back_populates="properties")
