@@ -97,3 +97,12 @@ class PropertyService:
         )
 
         return self.property_repository.update_property(inv_property)
+
+    def delete_property(self, property_id: int):
+        """
+        Delete a property
+        :param property_id: int
+        :return: None
+        """
+
+        return self.property_repository.delete_property(property_id)

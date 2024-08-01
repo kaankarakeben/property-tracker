@@ -1,4 +1,5 @@
 from .expense import ExpenseRepository
+from .finance import FinanceRepository
 from .investor import InvestorRepository
 from .lease import LeaseRepository
 from .maintenance_request import MaintenanceRequestRepository
