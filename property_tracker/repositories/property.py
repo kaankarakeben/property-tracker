@@ -11,6 +11,7 @@ class PropertyRepository:
         self.db.add(property)
         self.db.commit()
         self.db.refresh(property)
+        return property
 
     def get_property(self, property_id: int):
         return self.db.query(Property).filter(Property.id == property_id).first()

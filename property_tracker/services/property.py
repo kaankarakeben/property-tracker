@@ -1,9 +1,4 @@
-from property_tracker.models.property import (
-    Property,
-    PropertyType,
-    PurchaseCurrency,
-    Status,
-)
+from property_tracker.models.property import Property, PropertyType, PurchaseCurrency, Status
 from property_tracker.repositories import PropertyRepository
 
 
@@ -17,34 +12,57 @@ class PropertyService:
 
     def create_property(
         self,
-        investor_id: int,
         address: str,
+        postcode: str,
+        city: str,
         purchase_date: str,
         purchase_price: float,
         purchase_currency: PurchaseCurrency,
+        description: str,
+        no_of_bedrooms: int,
+        no_of_bathrooms: int,
+        sqm: float,
+        floor: int,
+        furnished: bool,
         property_type: PropertyType,
         status: Status,
     ):
         """
-        Create a property
-        :param investor_id: int
+        Create a new property
         :param address: str
+        :param postcode: str
+        :param city: str
         :param purchase_date: str
         :param purchase_price: float
         :param purchase_currency: Enum (PurchaseCurrency)
+        :param description: str
+        :param no_of_bedrooms: int
+        :param no_of_bathrooms: int
+        :param sqm: float
+        :param floor: int
+        :param furnished: bool
         :param property_type: Enum (PropertyType)
-        :param status: str
+        :param status: Enum (Status)
         :return: Property
         """
+
         inv_property = Property(
-            owner_id=investor_id,
             address=address,
+            postcode=postcode,
+            city=city,
             purchase_date=purchase_date,
             purchase_price=purchase_price,
             purchase_currency=purchase_currency,
-            type=property_type,
+            description=description,
+            no_of_bedrooms=no_of_bedrooms,
+            no_of_bathrooms=no_of_bathrooms,
+            sqm=sqm,
+            floor=floor,
+            furnished=furnished,
+            property_type=property_type,
             status=status,
         )
+
         return self.property_repository.add_property(inv_property)
 
     def get_property(self, property_id: int):
@@ -92,7 +110,7 @@ class PropertyService:
             purchase_date=purchase_date,
             purchase_price=purchase_price,
             purchase_currency=purchase_currency,
-            type=property_type,
+            property_type=property_type,
             status=status,
         )
 

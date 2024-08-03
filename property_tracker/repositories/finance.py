@@ -3,8 +3,8 @@ from sqlalchemy.orm import Session
 from property_tracker.models.finance import (
     Financing,
     FinancingType,
-    Payments,
-    PropertyInvestors,
+    Payment,
+    PropertyOwnership,
     PropertyTransaction,
     TransactionType,
     Valuation,
@@ -42,19 +42,17 @@ class FinanceRepository:
         self.db.refresh(transaction)
         return transaction
 
-    def create_ownership_record(
-        self, property_id: int, investor_id: int, ownership_start_date: str
-    ):
-        property_investor = PropertyInvestors(
+    def create_ownership_record(self, property_id: int, investor_id: int, ownership_start_date: str):
+        ownership = PropertyOwnership(
             property_id=property_id,
             investor_id=investor_id,
             ownership_start_date=ownership_start_date,
             ownership_share=1,
         )
-        self.db.add(property_investor)
+        self.db.add(ownership)
         self.db.commit()
-        self.db.refresh(property_investor)
-        return property_investor
+        self.db.refresh(ownership)
+        return ownership
 
     def create_financing_record(
         self,

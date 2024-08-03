@@ -14,6 +14,5 @@ class MaintenanceRequest(Base):
     description = Column(String)
     status = Column(String)
     property_id = Column(Integer, ForeignKey("properties.id"))
-    tenant_id = Column(Integer, ForeignKey("tenants.id"))
-    investor_id = Column(Integer, ForeignKey("investors.id"))
-    investor = relationship("Investor", back_populates="maintenance_requests")
+
+    property = relationship("Property", back_populates="maintenance_requests")

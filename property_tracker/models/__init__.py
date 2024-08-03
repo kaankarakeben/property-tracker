@@ -7,8 +7,5 @@ Base = declarative_base()
 
 from property_tracker.models.expense import Expense
 from property_tracker.models.investor import Investor
-from property_tracker.models.lease import Lease
 from property_tracker.models.maintenance_request import MaintenanceRequest
-from property_tracker.models.payment import Payment
 from property_tracker.models.property import Property
-from property_tracker.models.tenant import Tenant

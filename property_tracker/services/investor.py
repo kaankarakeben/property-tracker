@@ -10,19 +10,37 @@ class InvestorService:
     def __init__(self, investor_repository: InvestorRepository):
         self.investor_repository = investor_repository
 
-    def create_investor(self, name: str, email: str, phone_number: str, address: str):
+    def create_investor(
+        self,
+        first_name: str,
+        last_name: str,
+        email: str,
+        phone_number: str,
+        address: str,
+        investor_type: str,
+        company_name: str,
+    ):
         """
         Create a new investor
 
-        :param name: str
+        :param first_name: str
+        :param last_name: str
         :param email: str
         :param phone_number: str
         :param address: str
+        :param investor_type: str
+        :param company_name: str
         :return: Investor
         """
 
         new_investor = Investor(
-            name=name, email=email, phone_number=phone_number, address=address
+            first_name=first_name,
+            last_name=last_name,
+            email=email,
+            phone_number=phone_number,
+            address=address,
+            investor_type=investor_type,
+            company_name=company_name,
         )
         return self.investor_repository.add_investor(new_investor)
 
@@ -43,9 +61,7 @@ class InvestorService:
 
         return self.investor_repository.get_all_investors()
 
-    def update_investor(
-        self, investor_id: int, name: str, contact_details: str, portfolio_value: float
-    ):
+    def update_investor(self, investor_id: int, name: str, contact_details: str, portfolio_value: float):
         """
         Update an investor
         :param investor_id: int

@@ -11,21 +11,28 @@ console = Console()
 
 
 @app.command()
-def add(name: str, email: str, phone_number: str, address: str):
+def add(
+    first_name: str, last_name: str, email: str, phone_number: str, address: str, investor_type: str, company_name: str
+):
     """
     Add a new investor
 
     Args:
-        name (str): Name of the investor
+        first_name (str): First name of the investor
+        last_name (str): Last name of the investor
         email (str): Email of the investor
         phone_number (str): Phone number of the investor
         address (str): Address of the investor
+        investor_type (str): Type of the investor
+        company_name (str): Name of the company
     """
     investor_repository = InvestorRepository(session)
     investor_service = InvestorService(investor_repository)
-    investor = investor_service.create_investor(name, email, phone_number, address)
+    investor = investor_service.create_investor(
+        first_name, last_name, email, phone_number, address, investor_type, company_name
+    )
     session.close()
-    typer.echo(f"Investor {investor.name} added successfully")
+    typer.echo(f"Investor {investor.first_name} {investor.last_name} added successfully")
 
 
 @app.command()
@@ -41,11 +48,25 @@ def ls():
     table = Table(title="Investors")
 
     table.add_column("ID", justify="right", style="cyan", no_wrap=True)
-    table.add_column("Name", style="magenta")
+    table.add_column("First Name", style="magenta")
+    table.add_column("Last Name", style="yellow")
     table.add_column("Email", style="green")
+    table.add_column("Phone Number", style="blue")
+    table.add_column("Address", style="red")
+    table.add_column("Investor Type", style="cyan")
+    table.add_column("Company Name", style="magenta")
 
     for investor in investors:
-        table.add_row(str(investor.id), investor.name, investor.email)
+        table.add_row(
+            str(investor.id),
+            investor.first_name,
+            investor.last_name,
+            investor.email,
+            investor.phone_number,
+            investor.address,
+            investor.investor_type.value,
+            investor.company_name,
+        )
 
     console.print(table)
 

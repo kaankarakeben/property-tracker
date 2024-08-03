@@ -53,7 +53,7 @@ class Property(Base):
 
     __tablename__ = "properties"
     id = Column(Integer, primary_key=True, index=True)
-    address = Column(String, index=True)
+    address = Column(String, index=True, unique=True)
     postcode = Column(String, index=True)
     city = Column(String, index=True)
     purchase_date = Column(Date)
@@ -67,5 +67,9 @@ class Property(Base):
     furnished = Column(Boolean)
     property_type = Column(Enum(PropertyType))
     status = Column(Enum(Status))
-    owner_id = Column(Integer, ForeignKey("investors.id"))
-    owner = relationship("Investor", back_populates="properties")
+
+    valuations = relationship("Valuation", back_populates="property")
+    maintenance_requests = relationship("MaintenanceRequest", back_populates="property")
+    property_transactions = relationship("PropertyTransaction", back_populates="property")
+    ownerships = relationship("PropertyOwnership", back_populates="property")
+    financings = relationship("Financing", back_populates="property")
