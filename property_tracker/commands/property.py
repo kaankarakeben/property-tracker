@@ -4,8 +4,8 @@ from rich.table import Table
 
 from property_tracker.database import session
 from property_tracker.models.property import PropertyType, PurchaseCurrency, Status
-from property_tracker.repositories import PropertyRepository
-from property_tracker.services import PropertyService
+from property_tracker.repositories import FinanceRepository, PropertyRepository
+from property_tracker.services import FinanceService, PropertyService
 
 app = typer.Typer()
 console = Console()
@@ -104,3 +104,35 @@ def rm(property_id: int):
     property_service.delete_property(property_id)
     console.print("Property removed successfully.")
     session.close()
+
+
+@app.command()
+def purchase(
+    property_id: int,
+    investor_id: int,
+    transaction_date: str,
+    transaction_amount: float,
+    transaction_notes: str,
+    cash_payment: float,
+    ownership_share: float,
+    financing_interest_rate: float,
+    financing_loan_amount: float,
+):
+    """
+    Purchase a property.
+    """
+
+    finance_service = FinanceService(FinanceRepository(session))
+    finance_service.purchase_property(
+        property_id,
+        investor_id,
+        transaction_date,
+        transaction_amount,
+        transaction_notes,
+        cash_payment,
+        ownership_share,
+        financing_interest_rate,
+        financing_loan_amount,
+    )
+    session.close()
+    console.print("Property purchased successfully.")

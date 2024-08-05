@@ -42,12 +42,15 @@ class FinanceRepository:
         self.db.refresh(transaction)
         return transaction
 
-    def create_ownership_record(self, property_id: int, investor_id: int, ownership_start_date: str):
+    def create_ownership_record(
+        self, property_id: int, investor_id: int, ownership_start_date: str, ownership_share: float, transaction_id: int
+    ):
         ownership = PropertyOwnership(
             property_id=property_id,
             investor_id=investor_id,
             ownership_start_date=ownership_start_date,
-            ownership_share=1,
+            ownership_share=ownership_share,
+            transaction_id=transaction_id,
         )
         self.db.add(ownership)
         self.db.commit()
@@ -78,7 +81,7 @@ class FinanceRepository:
         self.db.refresh(financing)
         return financing
 
-    def create_validation_record(
+    def create_valuation_record(
         self,
         property_id: int,
         valuation_date: str,

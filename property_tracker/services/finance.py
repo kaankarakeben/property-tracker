@@ -1,4 +1,4 @@
-from property_tracker.models.finance import FinancingType, TransactionType
+from property_tracker.models.finance import FinancingType, TransactionType, ValuationType
 from property_tracker.repositories import FinanceRepository
 
 
@@ -17,6 +17,7 @@ class FinanceService:
         transaction_date: str,
         transaction_amount: float,
         transaction_notes: str,
+        cash_payment: float,
         ownership_share: float,
         financing_interest_rate: float,
         financing_loan_amount: float,
@@ -42,6 +43,7 @@ class FinanceService:
             transaction_type=TransactionType.PURCHASE,
             transaction_date=transaction_date,
             transaction_amount=transaction_amount,
+            cash_payment=cash_payment,
             notes=transaction_notes,
         )
 
@@ -50,6 +52,7 @@ class FinanceService:
             property_id=property_id,
             valuation_date=transaction_date,
             valuation_amount=transaction_amount,
+            valuation_type=ValuationType.PURCHASE,
         )
         # create an ownership record
         ownership = self.finance_repository.create_ownership_record(
