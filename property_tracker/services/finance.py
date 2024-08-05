@@ -10,6 +10,14 @@ class FinanceService:
     def __init__(self, finance_repository: FinanceRepository):
         self.finance_repository = finance_repository
 
+    def generate_expense(self, description: str, amount: float, date: str, investor_id: int):
+        """
+        Generate an expense record
+        """
+        return self.finance_repository.create_expense(
+            description=description, amount=amount, date=date, investor_id=investor_id
+        )
+
     def purchase_property(
         self,
         property_id: int,

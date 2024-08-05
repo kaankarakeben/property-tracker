@@ -116,3 +116,18 @@ class Valuation(Base):
     property_id = Column(Integer, ForeignKey("properties.id"))
 
     property = relationship("Property", back_populates="valuations")
+
+
+class Expense(Base):
+    """
+    Represents an expense incurred by an investor for a property.
+    """
+
+    __tablename__ = "expenses"
+    id = Column(Integer, primary_key=True, index=True)
+    description = Column(String)
+    amount = Column(Float)
+    date = Column(Date)
+    investor_id = Column(Integer, ForeignKey("investors.id"))
+
+    investor = relationship("Investor", back_populates="expenses")

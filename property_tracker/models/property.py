@@ -69,7 +69,6 @@ class Property(Base):
     status = Column(Enum(Status))
 
     valuations = relationship("Valuation", back_populates="property")
-    maintenance_requests = relationship("MaintenanceRequest", back_populates="property")
     property_transactions = relationship("PropertyTransaction", back_populates="property")
     ownerships = relationship("PropertyOwnership", back_populates="property")
     financings = relationship("Financing", back_populates="property")

@@ -98,3 +98,10 @@ class FinanceRepository:
         self.db.commit()
         self.db.refresh(valuation)
         return valuation
+
+    def create_expense(self, description: str, amount: float, date: str, investor_id: int):
+        payment = Payment(description=description, amount=amount, date=date, investor_id=investor_id)
+        self.db.add(payment)
+        self.db.commit()
+        self.db.refresh(payment)
+        return payment
