@@ -1,4 +1,5 @@
 from property_tracker.models.finance import FinancingType, TransactionType, ValuationType
+from property_tracker.models.investor import InvestorType
 from property_tracker.repositories import FinanceRepository
 
 
@@ -75,6 +76,52 @@ class FinanceService:
         # legal fees
         # stamp duty
         # surveyor fees etc.
-        # TODO: implement purchasing expenses
+
+        legal_fees = self.generate_expense(
+            description="Legal Fees",
+            amount=2000,
+            date=transaction_date,
+            investor_id=investor_id,
+        )
+
+        stamp_duty = self.generate_expense(
+            description="Stamp Duty",
+            amount=5000,
+            date=transaction_date,
+            investor_id=investor_id,
+        )
 
         return ownership
+
+
+def calculate_stamp_duty(value, investor_type: InvestorType):
+    """
+    Calculate the stamp duty for a property purchase
+    """
+
+    # Initialize the total stamp duty
+    total_duty = 0
+
+    # Determine the rate based on ownership type
+    if investor_type == InvestorType.SOLE_TRADER:
+        if value <= 250000:
+            total_duty += value * 0.03
+        elif value <= 925000:
+            total_duty += 250000 * 0.03 + (value - 250000) * 0.08
+        elif value <= 1500000:
+            total_duty += 250000 * 0.03 + 675000 * 0.08 + (value - 925000) * 0.13
+        else:
+            total_duty += 250000 * 0.03 + 675000 * 0.08 + 575000 * 0.13 + (value - 1500000) * 0.15
+    elif investor_type == InvestorType.LIMITED_COMPANY:
+        if value <= 125000:
+            total_duty += value * 0.03
+        elif value <= 250000:
+            total_duty += 125000 * 0.03 + (value - 125000) * 0.05
+        elif value <= 925000:
+            total_duty += 125000 * 0.03 + 125000 * 0.05 + (value - 250000) * 0.08
+        elif value <= 1500000:
+            total_duty += 125000 * 0.03 + 125000 * 0.05 + 675000 * 0.08 + (value - 925000) * 0.13
+        else:
+            total_duty += 125000 * 0.03 + 125000 * 0.05 + 675000 * 0.08 + 575000 * 0.13 + (value - 1500000) * 0.15
+
+    return total_duty
