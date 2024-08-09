@@ -1,9 +1,11 @@
+import datetime
+
+from dateutil.relativedelta import relativedelta
 from sqlalchemy.orm import Session
 
 from property_tracker.models.finance import (
-    Financing,
-    FinancingType,
-    Payment,
+    Expense,
+    Mortgage,
     PropertyOwnership,
     PropertyTransaction,
     TransactionType,
@@ -19,7 +21,7 @@ class FinanceRepository:
     def create_property_transaction(
         self,
         property_id: int,
-        financing_id: int,
+        mortgage_id: int,
         transaction_type: TransactionType,
         transaction_date: str,
         transaction_amount: float,
@@ -29,7 +31,7 @@ class FinanceRepository:
         # Create the property transaction record
         transaction = PropertyTransaction(
             property_id=property_id,
-            financing_id=financing_id,
+            mortgage_id=mortgage_id,
             transaction_type=transaction_type,
             transaction_date=transaction_date,
             transaction_amount=transaction_amount,
@@ -57,29 +59,34 @@ class FinanceRepository:
         self.db.refresh(ownership)
         return ownership
 
-    def create_financing_record(
+    def create_mortgage_record(
         self,
         property_id: int,
         investor_id: int,
-        financing_type: FinancingType,
         start_date: str,
         end_date: str,
-        interest_rate: float,
-        loan_amount: float,
+        principal: float,
+        annual_interest_rate: float,
+        payment_term: int,
     ):
-        financing = Financing(
+        # parse the start date
+        start_date = datetime.datetime.strptime(start_date, "%Y-%m-%d")
+        # calculate the end date of the mortgage based on the payment term
+        end_date = start_date + relativedelta(years=payment_term)
+
+        mortgage = Mortgage(
             property_id=property_id,
             investor_id=investor_id,
-            financing_type=financing_type,
             start_date=start_date,
             end_date=end_date,
-            interest_rate=interest_rate,
-            loan_amount=loan_amount,
+            principal=principal,
+            annual_interest_rate=annual_interest_rate,
+            payment_term=payment_term,
         )
-        self.db.add(financing)
+        self.db.add(mortgage)
         self.db.commit()
-        self.db.refresh(financing)
-        return financing
+        self.db.refresh(mortgage)
+        return mortgage
 
     def create_valuation_record(
         self,
@@ -99,9 +106,17 @@ class FinanceRepository:
         self.db.refresh(valuation)
         return valuation
 
-    def create_expense(self, description: str, amount: float, date: str, investor_id: int):
-        payment = Payment(description=description, amount=amount, date=date, investor_id=investor_id)
-        self.db.add(payment)
+    def create_expense(self, description: str, amount: float, date: str, investor_id: int, property_id: int):
+        expense = Expense(
+            description=description, amount=amount, date=date, investor_id=investor_id, property_id=property_id
+        )
+        self.db.add(expense)
         self.db.commit()
-        self.db.refresh(payment)
-        return payment
+        self.db.refresh(expense)
+        return expense
+
+    def get_all_mortgages(self):
+        return self.db.query(Mortgage).all()
+
+    def get_all_expenses(self):
+        return self.db.query(Expense).all()

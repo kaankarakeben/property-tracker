@@ -6,13 +6,6 @@ engine = create_engine(DATABASE_URL)
 Base = declarative_base()
 
 
-from property_tracker.models.finance import (
-    Expense,
-    Financing,
-    Payment,
-    PropertyOwnership,
-    PropertyTransaction,
-    Valuation,
-)
+from property_tracker.models.finance import Expense, Mortgage, PropertyOwnership, PropertyTransaction, Valuation
 from property_tracker.models.investor import Investor
 from property_tracker.models.property import Property

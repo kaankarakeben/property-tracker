@@ -31,5 +31,7 @@ class Investor(Base):
     investor_type = Column(Enum(InvestorType), nullable=False)
     company_name = Column(String)
 
-    financings = relationship("Financing", back_populates="investor")
+    mortgages = relationship("Mortgage", back_populates="investor")
     ownerships = relationship("PropertyOwnership", back_populates="investor")
+    expenses = relationship("Expense", back_populates="investor")
+    rental_incomes = relationship("RentalIncome", back_populates="investor")

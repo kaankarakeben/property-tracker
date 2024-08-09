@@ -6,46 +6,24 @@ from sqlalchemy.orm import relationship
 from property_tracker.models import Base
 
 
-class FinancingType(PyEnum):
+class Mortgage(Base):
     """
-    Represents the type of a financing agreement.
-    """
-
-    MORTGAGE = "Mortgage"
-
-
-class Financing(Base):
-    """
-    Represents a financing agreement for the purchase of a property.
+    Represents a mortgage on a property.
     """
 
-    __tablename__ = "financings"
+    __tablename__ = "mortgages"
     id = Column(Integer, primary_key=True, index=True)
-    financing_type = Column(Enum(FinancingType))
     start_date = Column(Date)
     end_date = Column(Date)
-    interest_rate = Column(Float)
-    loan_amount = Column(Float)
+    principal = Column(Float)
+    payment_term = Column(Integer)
+    annual_interest_rate = Column(Float)
     property_id = Column(Integer, ForeignKey("properties.id"))
     investor_id = Column(Integer, ForeignKey("investors.id"))
 
-    investor = relationship("Investor", back_populates="financings")
-    property = relationship("Property", back_populates="financings")
-    property_transactions = relationship("PropertyTransaction", back_populates="financing")
-
-
-class Payment(Base):
-    """
-    Represents a payment made by a tenant to an investor for rent.
-    """
-
-    __tablename__ = "payments"
-    id = Column(Integer, primary_key=True, index=True)
-    payment_date = Column(Date, nullable=False)
-    payment_amount = Column(Float, nullable=False)
-    payment_type = Column(String, nullable=False)
-    notes = Column(String)
-    financing_id = Column(Integer, ForeignKey("financings.id"))
+    investor = relationship("Investor", back_populates="mortgages")
+    property = relationship("Property", back_populates="mortgages")
+    property_transactions = relationship("PropertyTransaction", back_populates="mortgage")
 
 
 class TransactionType(PyEnum):
@@ -71,10 +49,10 @@ class PropertyTransaction(Base):
     cash_payment = Column(Float)
     notes = Column(String)
     property_id = Column(Integer, ForeignKey("properties.id"))
-    financing_id = Column(Integer, ForeignKey("financings.id"))
+    mortgage_id = Column(Integer, ForeignKey("mortgages.id"))
 
     property = relationship("Property", back_populates="property_transactions")
-    financing = relationship("Financing", back_populates="property_transactions")
+    mortgage = relationship("Mortgage", back_populates="property_transactions")
 
 
 class PropertyOwnership(Base):
@@ -129,5 +107,23 @@ class Expense(Base):
     amount = Column(Float)
     date = Column(Date)
     investor_id = Column(Integer, ForeignKey("investors.id"))
+    property_id = Column(Integer, ForeignKey("properties.id"))
 
     investor = relationship("Investor", back_populates="expenses")
+    property = relationship("Property", back_populates="expenses")
+
+
+class RentalIncome(Base):
+    """
+    Represents a rent payment received for a property.
+    """
+
+    __tablename__ = "rental_incomes"
+    id = Column(Integer, primary_key=True, index=True)
+    amount = Column(Float)
+    date = Column(Date)
+    property_id = Column(Integer, ForeignKey("properties.id"))
+    investor_id = Column(Integer, ForeignKey("investors.id"))
+
+    property = relationship("Property", back_populates="rental_income")
+    investor = relationship("Investor", back_populates="rental_incomes")

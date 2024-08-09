@@ -15,9 +15,6 @@ class PropertyService:
         address: str,
         postcode: str,
         city: str,
-        purchase_date: str,
-        purchase_price: float,
-        purchase_currency: PurchaseCurrency,
         description: str,
         no_of_bedrooms: int,
         no_of_bathrooms: int,
@@ -32,9 +29,6 @@ class PropertyService:
         :param address: str
         :param postcode: str
         :param city: str
-        :param purchase_date: str
-        :param purchase_price: float
-        :param purchase_currency: Enum (PurchaseCurrency)
         :param description: str
         :param no_of_bedrooms: int
         :param no_of_bathrooms: int
@@ -50,9 +44,6 @@ class PropertyService:
             address=address,
             postcode=postcode,
             city=city,
-            purchase_date=purchase_date,
-            purchase_price=purchase_price,
-            purchase_currency=purchase_currency,
             description=description,
             no_of_bedrooms=no_of_bedrooms,
             no_of_bathrooms=no_of_bathrooms,
@@ -81,40 +72,6 @@ class PropertyService:
         """
 
         return self.property_repository.get_all_properties()
-
-    def update_property(
-        self,
-        property_id: int,
-        address: str,
-        purchase_date: str,
-        purchase_price: float,
-        purchase_currency: PurchaseCurrency,
-        property_type: PropertyType,
-        status: Status,
-    ):
-        """
-        Update a property
-        :param property_id: int
-        :param address: str
-        :param purchase_date: str
-        :param purchase_price: float
-        :param purchase_currency: Enum (PurchaseCurrency)
-        :param property_type: Enum (PropertyType)
-        :param status: str
-        :return: Property
-        """
-
-        inv_property = Property(
-            id=property_id,
-            address=address,
-            purchase_date=purchase_date,
-            purchase_price=purchase_price,
-            purchase_currency=purchase_currency,
-            property_type=property_type,
-            status=status,
-        )
-
-        return self.property_repository.update_property(inv_property)
 
     def delete_property(self, property_id: int):
         """
