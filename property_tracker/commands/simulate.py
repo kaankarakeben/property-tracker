@@ -168,7 +168,7 @@ def run(investor_id: int, property_id: int, investment_type: str):
         property_id=property_id,
         investor_id=investor_id,
         transaction_date=transaction_date,
-        transaction_amount=purchase_price,
+        transaction_amount=purchase_price * 1000,
         transaction_notes=f"Property purchase for {investment_type}",
         cash_payment=down_payment,
         ownership_share=100,
@@ -177,18 +177,55 @@ def run(investor_id: int, property_id: int, investment_type: str):
         payment_term=payment_term,
     )
 
+    # Get the expenses for the property purchase
+    expenses = finance_service.get_all_expenses(property_id)
+    # Get the cost of stamp duty
+    stamp_duty = sum([expense.amount for expense in expenses if expense.description == "Stamp Duty"])
+    legal_fees = sum([expense.amount for expense in expenses if expense.description == "Legal Fees"])
+
     show_information_panel(
         "Property Purchased",
         f"""
         The property has been successfully purchased by the investor.
         - **Transaction Date**: {transaction_date}
         - **Purchase Price**: £{int(purchase_price)}K
+        - **Legal Fees**: £{LEGAL_FEES}
+        - **Stamp Duty**: £{int(stamp_duty)}K
 
         # Mortgage Details
         - **LTV**: "{(loan_amount / purchase_price) * 100}%"
-        - **Down Payment**: £{int(down_payment)}
+        - **Down Payment**: £{int(down_payment)}K
         - **Loan Amount**: £{int(loan_amount)}K
         - **Interest Rate**: "{interest_rate * 100}%"
         - **Payment Term**: {payment_term} years
+        """,
+    )
+
+    # Ask how much is the investor looking to spend to get the property ready for rent
+    refurbishment_cost = Prompt.ask("Enter the refurbishment cost for the property")
+    refurbishment_cost = float(refurbishment_cost)
+
+    # Furnishing the property
+    furnishing_cost = Prompt.ask("Enter the cost of furnishing the property")
+    furnishing_cost = float(furnishing_cost)
+
+    # Ask for the monthly rent
+    monthly_rent = Prompt.ask("Enter the monthly rent you are expecting for the property")
+    monthly_rent = float(monthly_rent)
+
+    # Ask for the running costs
+    running_costs = Prompt.ask(
+        "Enter the monthly running costs for the property. These include insurance, service charges etc."
+    )
+    running_costs = float(running_costs)
+
+    show_information_panel(
+        "Property Investment Summary",
+        f"""
+        - **Total Cash Investment**: £{int(total_cash_investment)}K
+        - **Annual Cash Flow**: £{int(annual_cash_flow)}
+        - **Gross Yield**: {gross_yield * 100}%
+        - **Net Yield**: {net_yield * 100}%
+        - **ROI**: {roi * 100}%
         """,
     )

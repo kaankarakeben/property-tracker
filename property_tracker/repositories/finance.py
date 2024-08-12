@@ -120,3 +120,6 @@ class FinanceRepository:
 
     def get_all_expenses(self):
         return self.db.query(Expense).all()
+
+    def get_all_expenses_for_property(self, property_id: int):
+        return self.db.query(Expense).filter(Expense.property_id == property_id).all()

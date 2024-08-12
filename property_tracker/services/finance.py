@@ -150,3 +150,10 @@ class FinanceService:
         return self.finance_repository.create_rent_payment(
             property_id=property_id, investor_id=investor_id, amount=amount, date=date
         )
+
+    def get_all_expenses(self, property_id: int = None):
+        """
+        Get all expenses involving a property if property_id is provided.
+        """
+        if property_id:
+            return self.finance_repository.get_all_expenses_for_property(property_id)
