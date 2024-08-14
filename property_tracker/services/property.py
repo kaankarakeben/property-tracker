@@ -1,4 +1,4 @@
-from property_tracker.models.property import Property, PropertyType, PurchaseCurrency, Status
+from property_tracker.models.property import Property, PropertyType, Status
 from property_tracker.repositories import PropertyRepository
 
 

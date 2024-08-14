@@ -3,9 +3,7 @@ from rich.console import Console
 from rich.table import Table
 
 from property_tracker.database import session
-from property_tracker.models.property import PropertyType, PurchaseCurrency, Status
-from property_tracker.repositories import FinanceRepository, InvestorRepository, PropertyRepository
-from property_tracker.services import FinanceService, PropertyService
+from property_tracker.repositories import FinanceRepository
 
 app = typer.Typer()
 console = Console()

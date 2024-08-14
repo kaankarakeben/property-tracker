@@ -6,16 +6,6 @@ from sqlalchemy.orm import relationship
 from property_tracker.models import Base
 
 
-class PurchaseCurrency(PyEnum):
-    """
-    Represents the currency in which a property was purchased.
-    """
-
-    USD = "USD"
-    EUR = "EUR"
-    GBP = "GBP"
-
-
 class PropertyType(PyEnum):
     """
     Represents the type of a property.

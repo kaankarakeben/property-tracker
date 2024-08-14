@@ -324,7 +324,7 @@ class SimulationService:
         property_details: PropertyDetails,
         investment_details: InvestmentDetails,
         investor_type: InvestorType,
-        number_of_years: int,
+        num_years: int,
     ) -> Tuple[float, pd.DataFrame, float, float]:
         """
         Run a simulation of a property investment
@@ -395,7 +395,7 @@ class SimulationService:
         )
 
         property_value = property_details.purchase_price
-        for year in range(1, number_of_years):
+        for year in range(1, num_years):
 
             equity_growth = EquityGrowthCalculator.calculate_equity_growth(property_value, payment_schedule, year)
 
